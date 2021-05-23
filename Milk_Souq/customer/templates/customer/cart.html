@@ -1,0 +1,144 @@
+{% extends 'customer/index.html' %}
+{% load static %}
+{% block head %}
+    <meta charset="utf-8">
+    <title>Customer Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Bootstrap styles -->
+    <link href="{% static 'customer/assets/css/bootstrap.css' %}" rel="stylesheet"/>
+    <!-- Customize styles -->
+    <link href="{% static 'customer/style.css' %}" rel="stylesheet"/>
+    <!-- font awesome styles -->
+	<link href="{% static 'customer/assets/font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+		<!--[if IE 7]>
+			<link href="{% static 'customer/css/font-awesome-ie7.min.css' %}" rel="stylesheet">
+		<![endif]-->
+
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+	<!-- Favicons -->
+    <link rel="shortcut icon" href="{% static 'customer/assets/ico/favicon.ico' %}">
+
+<!--
+	Upper Header Section
+-->
+
+
+<!--
+Lower Header Section
+-->
+ {% endblock  %}
+{% block section %}
+
+
+
+
+
+	<div class="row">
+	<div class="span12">
+	<div class="well well-small">
+		<h1>Check Out <small class="pull-right"> {{c}} Items are in the cart </small></h1>
+	<hr class="soften"/>
+
+	<table class="table table-bordered table-condensed">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Description</th>
+				  <th>	Ref. </th>
+                  <th>Avail.</th>
+                  <th>Unit price</th>
+                  <th>Qty </th>
+                  <th>Total</th>
+				</tr>
+              </thead>
+              <tbody>
+			  {% for a in s %}
+                <tr>
+					{% for m in t %}
+					{% ifequal a.itid_id m.id %}
+                  <td><img width="50" src="{{m.photo.url}}" alt=""></td>
+
+                  <td>Items name here:{{m.name}}
+					  {% for n in b %}
+					  {% ifequal m.bid_id n.id %}
+					  <br>Model:{{n.name}} </td>
+					  {% endifequal %}
+					 {% endfor %}
+                  <td> - </td>
+                  <td><span class="shopBtn"><span class="icon-ok"></span></span> </td>
+                  <td>{{m.price}}</td>
+
+				</td>
+                  <td>{{a.quantity}}</td>
+					<td>{% widthratio m.price 1 a.quantity %}</td>
+                </tr>
+			  {% endifequal %}
+			  {% endfor %}
+			   {% endfor %}
+
+
+				</tbody>
+            </table><br/>
+		<h1 align="right">Total:${{sum}}</h1>
+
+		<!--
+            <table class="table table-bordered">
+			<tbody>
+				 <tr>
+                  <td>
+				<form class="form-inline">
+				  <label style="min-width:159px"> VOUCHERS Code: </label>
+				<input type="text" class="input-medium" placeholder="CODE">
+				<button type="submit" class="shopBtn"> ADD</button>
+				</form>
+				</td>
+                </tr>
+
+			</tbody>
+				</table>-->
+			<table class="table table-bordered">
+			<tbody>
+                <tr><td>Address</td></tr>
+                 <tr>
+				 <td>
+					<form class="form-horizontal"method="post">
+						{% csrf_token %}
+					  <div class="control-group">
+						  <br>
+
+						Street:<input type="text"  name="street" id="street" required><br><br>
+						City:<input type="text"  name="city" id="city" required><br><br>
+						  District:<input type="text" name="district" id="district" required><br><br>
+						</div>
+
+
+					  <div class="control-group">
+						<label class="span2 control-label" for="pin">Post Code/ Zipcode</label>
+						<div class="controls">
+						  <input type="text" name="pin" id="pin" maxlength=6>
+						</div>
+					  </div>
+					  <div class="control-group">
+						<div class="controls">
+						  <button type="submit" class="shopBtn" name="book" id="book" value={{p.id}}>Purchase</button>
+						</div>
+					  </div>
+					</form>
+				  </td>
+				  </tr>
+              </tbody>
+            </table>
+
+ {% endblock  %}
+{% block script %}
+    <script src="{% static 'customer/assets/js/jquery.js' %}"></script>
+	<script src="{% static 'customer/assets/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'customer/assets/js/jquery.easing-1.3.min.js' %}"></script>
+    <script src="{% static 'customer/assets/js/jquery.scrollTo-1.4.3.1-min.js' %}"></script>
+    <script src="{% static 'customer/assets/js/shop.js' %}"></script>
+{% endblock  %}

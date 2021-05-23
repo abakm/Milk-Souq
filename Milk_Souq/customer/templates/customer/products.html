@@ -1,0 +1,467 @@
+{% extends 'customer/index.html' %}
+{% load static %}
+{% block head %}
+    <meta charset="utf-8">
+    <title>Customer Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Bootstrap styles -->
+    <link href="{% static 'customer/assets/css/bootstrap.css' %}" rel="stylesheet"/>
+    <!-- Customize styles -->
+    <link href="{% static 'customer/style.css' %}" rel="stylesheet"/>
+    <!-- font awesome styles -->
+	<link href="{% static 'customer/assets/font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+		<!--[if IE 7]>
+			<link href="{% static 'customer/css/font-awesome-ie7.min.css' %}" rel="stylesheet">
+		<![endif]-->
+
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+	<!-- Favicons -->
+    <link rel="shortcut icon" href="{% static 'customer/assets/ico/favicon.ico' %}">
+
+<!-- 
+	Upper Header Section 
+-->
+
+
+<!--
+Lower Header Section 
+-->
+ {% endblock  %}
+{% block section %}
+
+
+<div class="row">
+<div id="sidebar" class="span3">
+<div class="well well-small">
+	<ul class="nav nav-list">
+		<li><a href="products.html"><span class="icon-chevron-right"></span>Fashion</a></li>
+		<li><a href="products.html"><span class="icon-chevron-right"></span>Watches</a></li>
+		<li><a href="products.html"><span class="icon-chevron-right"></span>Fine Jewelry</a></li>
+		<li><a href="products.html"><span class="icon-chevron-right"></span>Fashion Jewelry</a></li>
+		<li><a href="products.html"><span class="icon-chevron-right"></span>Engagement & Wedding</a></li>
+		<li><a href="products.html"><span class="icon-chevron-right"></span>Men's Jewelry</a></li>
+		<li><a href="products.html"><span class="icon-chevron-right"></span>Vintage & Antique</a></li>
+		<li><a href="products.html"><span class="icon-chevron-right"></span>Loose Diamonds </a></li>
+		<li><a href="products.html"><span class="icon-chevron-right"></span>Loose Beads</a></li>
+		<li><a href="products.html"><span class="icon-chevron-right"></span>See All Jewelry & Watches</a></li>
+		<li style="border:0"> &nbsp;</li>
+		</ul>
+</div>
+
+			  <div class="well well-small alert alert-warning cntr">
+				  {% if dc %}
+				   <h2>{{dc.percent}}% {{dc.name}} Discount</h2>
+				  <p>
+					 only valid for online order. <br><br><a class="defaultBtn">Click here </a>
+				  </p>
+				  {% endif %}
+
+			  </div>
+			  <div class="well well-small" ><a href="#"><img src="{% static 'customer/assets/img/paypal.jpg' %}" alt="payment method paypal"></a></div>
+
+			{% if st or stn %}
+			<a class="shopBtn btn-block">Upcoming Auctions</a><br><br>
+
+			<ul class="nav nav-list promowrapper">
+				{% if stn %}
+				{% for a in stn %}
+			<li>
+
+			  <div class="thumbnail">
+				  <h1><strong>{{a.name}}</strong></h1>
+				<a class="zoomTool" href="http://127.0.0.1:8000/home/customer/BidRegister/{{a.id}}" title="Register"><span class="icon-search"></span> Register</a>
+				<img src="{{a.photo.url}}" alt="No Image">
+				<div class="caption">
+					<h4><a class="defaultBtn">Quantity:</a> <span class="pull-right">{{a.quantity}}</span></h4>
+				  <h4><a class="defaultBtn">Base Price:</a> <span class="pull-right">{{a.min}}</span></h4>
+					<h4><a class="defaultBtn">Date:</a> <span class="pull-right">{{a.bid_date}}</span></h4><br><br>
+					<h4><a class="defaultBtn">between {{a.bid_start_time}} and {{a.bid_start_time}}</a></h4>
+
+
+
+				</div>
+			  </div>
+			</li>
+			<li style="border:0"> &nbsp;</li>
+			{% endfor %}
+				{% endif %}
+
+
+						{% if st %}
+				{% for a in st %}
+			<li>
+
+			  <div class="thumbnail">
+				  <h1><strong>{{a.name}}</strong></h1>
+				<a class="zoomTool" title="Already Applied"><span class="icon-search"></span> Registered</a>
+				<img src="{{a.photo.url}}" alt="No Image">
+				<div class="caption">
+					<h4><a class="defaultBtn">Quantity:</a> <span class="pull-right">{{a.quantity}}</span></h4>
+				  <h4><a class="defaultBtn">Base Price:</a> <span class="pull-right">{{a.min}}</span></h4>
+					<h4><a class="defaultBtn">Date:</a> <span class="pull-right">{{a.bid_date}}</span></h4><br><br>
+					<h4><a class="defaultBtn">between {{a.bid_start_time}} and {{a.bid_start_time}}</a></h4>
+
+
+
+				</div>
+			  </div>
+			</li>
+			<li style="border:0"> &nbsp;</li>
+			{% endfor %}
+				{% endif %}
+
+		  </ul>
+
+		{% endif %}
+
+
+	</div>
+	<div class="span9">
+<!-- 
+New Products
+
+--><div id="searchform">
+      <div>
+        <form method="post">
+			{% csrf_token %}
+          <fieldset>
+            <legend>Quick Search:</legend>
+            <input type="text" placeholder="Enter search term&hellip;" name="word">
+            <button type="submit"><i class="fas fa-search"></i></button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+		<br><br>
+		<hr>
+		<hr>
+		<hr>
+		<hr>
+
+		{% if msg %}
+		<h2>Search results for '{{msg}}'</h2>
+		{% endif %}
+
+	<div class="well well-small">
+
+
+	 {% if item %}
+	<h3>Products </h3>
+		<div class="row-fluid">
+		  <ul class="thumbnails">
+
+
+
+			   {% for t in item %}
+			<li class="span4">
+			  <div class="thumbnail">
+				<a href="product_details.html" class="overlay"></a>
+				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+				<a href="product_details.html"><img src="{{ t.photo.url }}" alt=""></a>
+				<div class="caption cntr">
+					<p>{{ t.name }}</p>
+					<p><strong> {{ t.price }}</strong></p>
+					{% ifequal t.quantity 0 %}
+					<p><strong>Out of stock</strong></p>
+					{% else %}
+					<h4><a class="shopBtn" href="http://127.0.0.1:8000/home/customer/purchase/{{t.id}}" title="add to cart"> Add to cart </a></h4>
+					{% endifequal %}
+
+
+				</div>
+			  </div>
+			</li>
+			  {% endfor %}
+			   </ul>
+				</div>
+				</div>
+
+		<hr>
+		<hr>
+		{% endif %}
+
+
+		{% if ditem %}
+			  <div class="well well-small">
+			<h3>DailyProducts </h3>
+			<div class="row-fluid">
+		  	<ul class="thumbnails">
+			   {% for dt in ditem %}
+			<li class="span4">
+			  <div class="thumbnail">
+				<a href="product_details.html" class="overlay"></a>
+				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+				<a href="product_details.html"><img src="{{ dt.photo.url }}" alt=""></a>
+				<div class="caption cntr">
+					<p>{{ dt.name }}</p>
+					<p><strong> {{ dt.price }}</strong></p>
+					<h4><a class="shopBtn" href="http://127.0.0.1:8000/home/customer/subscribe/{{dt.id}}" title="add to cart">Subscribe</a></h4>
+
+
+				</div>
+			  </div>
+			</li>
+			  {% endfor %}
+				{% endif %}
+
+
+
+			  <!--
+			<li class="span4">
+			  <div class="thumbnail">
+				<a href="product_details.html" class="overlay"></a>
+				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+				<a href="product_details.html"><img src="{% static 'customer/assets/img/c.jpg' %}" alt=""></a>
+				<div class="caption cntr">
+					<p>Manicure & Pedicure</p>
+					<p><strong> $22.00</strong></p>
+					<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
+					<div class="actionList">
+						<a class="pull-left" href="#">Add to Wish List </a> 
+						<a class="pull-left" href="#"> Add to Compare </a>
+					</div> 
+					<br class="clr">
+				</div>
+			  </div>
+			</li>
+		  </ul>
+		</div>
+	<div class="row-fluid">
+		  <ul class="thumbnails">
+			<li class="span4">
+			  <div class="thumbnail">
+				<a href="product_details.html" class="overlay"></a>
+				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+				<a href="product_details.html"><img src="{% static 'customer/assets/img/d.jpg' %}" alt=""></a>
+				<div class="caption cntr">
+					<p>Manicure & Pedicure</p>
+					<p><strong> $22.00</strong></p>
+					<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
+					<div class="actionList">
+						<a class="pull-left" href="#">Add to Wish List </a> 
+						<a class="pull-left" href="#"> Add to Compare </a>
+					</div> 
+					<br class="clr">
+				</div>
+			  </div>
+			</li>
+			<li class="span4">
+			  <div class="thumbnail">
+				<a href="product_details.html" class="overlay"></a>
+				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+				<a href="product_details.html"><img src="{% static 'customer/assets/img/e.jpg' %}" alt=""></a>
+				<div class="caption cntr">
+					<p>Manicure & Pedicure</p>
+					<p><strong> $22.00</strong></p>
+					<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
+					<div class="actionList">
+						<a class="pull-left" href="#">Add to Wish List </a> 
+						<a class="pull-left" href="#"> Add to Compare </a>
+					</div> 
+					<br class="clr">
+				</div>
+			  </div>
+			</li>
+			<li class="span4">
+			  <div class="thumbnail">
+				<a href="product_details.html" class="overlay"></a>
+				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+				<a href="product_details.html"><img src="{% static 'customer/assets/img/f.jpg' %}" alt=""></a>
+				<div class="caption cntr">
+					<p>Manicure & Pedicure</p>
+					<p><strong> $22.00</strong></p>
+					<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
+					<div class="actionList">
+						<a class="pull-left" href="#">Add to Wish List </a> 
+						<a class="pull-left" href="#"> Add to Compare </a>
+					</div> 
+					<br class="clr">
+				</div>
+			  </div>
+			</li>
+		  </ul>
+		</div>
+	<div class="row-fluid">
+		  <ul class="thumbnails">
+			<li class="span4">
+			  <div class="thumbnail">
+				<a href="product_details.html" class="overlay"></a>
+				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+				<a href="product_details.html"><img src="{% static 'customer/assets/img/g.jpg' %}" alt=""></a>
+				<div class="caption cntr">
+					<p>Manicure & Pedicure</p>
+					<p><strong> $22.00</strong></p>
+					<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
+					<div class="actionList">
+						<a class="pull-left" href="#">Add to Wish List </a> 
+						<a class="pull-left" href="#"> Add to Compare </a>
+					</div> 
+					<br class="clr">
+				</div>
+			  </div>
+			</li>
+			<li class="span4">
+			  <div class="thumbnail">
+				<a href="product_details.html" class="overlay"></a>
+				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+				<a href="product_details.html"><img src="{% static 'customer/assets/img/h.jpg' %}" alt=""></a>
+				<div class="caption cntr">
+					<p>Manicure & Pedicure</p>
+					<p><strong> $22.00</strong></p>
+					<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
+					<div class="actionList">
+						<a class="pull-left" href="#">Add to Wish List </a> 
+						<a class="pull-left" href="#"> Add to Compare </a>
+					</div> 
+					<br class="clr">
+				</div>
+			  </div>
+			</li>
+			<li class="span4">
+			  <div class="thumbnail">
+				<a href="product_details.html" class="overlay"></a>
+				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+				<a href="product_details.html"><img src="{% static 'customer/assets/img/i.jpg' %}" alt=""></a>
+				<div class="caption cntr">
+					<p>Manicure & Pedicure</p>
+					<p><strong> $22.00</strong></p>
+					<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
+					<div class="actionList">
+						<a class="pull-left" href="#">Add to Wish List </a> 
+						<a class="pull-left" href="#"> Add to Compare </a>
+					</div> 
+					<br class="clr">
+				</div>
+			  </div>
+			</li>
+		  </ul>
+		</div>
+	<div class="row-fluid">
+		  <ul class="thumbnails">
+			<li class="span4">
+			  <div class="thumbnail">
+				<a href="product_details.html" class="overlay"></a>
+				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+				<a href="product_details.html"><img src="{% static 'customer/assets/img/a.jpg' %}" alt=""></a>
+				<div class="caption cntr">
+					<p>Manicure & Pedicure</p>
+					<p><strong> $22.00</strong></p>
+					<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
+					<div class="actionList">
+						<a class="pull-left" href="#">Add to Wish List </a> 
+						<a class="pull-left" href="#"> Add to Compare </a>
+					</div> 
+					<br class="clr">
+				</div>
+			  </div>
+			</li>
+			<li class="span4">
+			  <div class="thumbnail">
+				<a href="product_details.html" class="overlay"></a>
+				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+				<a href="product_details.html"><img src="{% static 'customer/assets/img/b.jpg' %}" alt=""></a>
+				<div class="caption cntr">
+					<p>Manicure & Pedicure</p>
+					<p><strong> $22.00</strong></p>
+					<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
+					<div class="actionList">
+						<a class="pull-left" href="#">Add to Wish List </a> 
+						<a class="pull-left" href="#"> Add to Compare </a>
+					</div> 
+					<br class="clr">
+				</div>
+			  </div>
+			</li>
+			<li class="span4">
+			  <div class="thumbnail">
+				<a href="product_details.html" class="overlay"></a>
+				<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
+				<a href="product_details.html"><img src="{% static 'customer/assets/img/c.jpg' %}" alt=""></a>
+				<div class="caption cntr">
+					<p>Manicure & Pedicure</p>
+					<p><strong> $22.00</strong></p>
+					<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
+					<div class="actionList">
+						<a class="pull-left" href="#">Add to Wish List </a> 
+						<a class="pull-left" href="#"> Add to Compare </a>
+					</div> 
+					<br class="clr">
+				</div>
+			  </div>
+			</li>-->
+		  </ul>
+		</div>
+	
+
+
+	</div>
+
+
+
+<!--
+Footer
+-->
+<!--<footer class="footer">
+<div class="row-fluid">
+<div class="span2">
+<h5>Your Account</h5>
+<a href="#">YOUR ACCOUNT</a><br>
+<a href="#">PERSONAL INFORMATION</a><br>
+<a href="#">ADDRESSES</a><br>
+<a href="#">DISCOUNT</a><br>
+<a href="#">ORDER HISTORY</a><br>
+ </div>
+<div class="span2">
+<h5>Iinformation</h5>
+<a href="contact.html">CONTACT</a><br>
+<a href="#">SITEMAP</a><br>
+<a href="#">LEGAL NOTICE</a><br>
+<a href="#">TERMS AND CONDITIONS</a><br>
+<a href="#">ABOUT US</a><br>
+ </div>
+<div class="span2">
+<h5>Our Offer</h5>
+<a href="#">NEW PRODUCTS</a> <br>
+<a href="#">TOP SELLERS</a><br>
+<a href="#">SPECIALS</a><br>
+<a href="#">MANUFACTURERS</a><br>
+<a href="#">SUPPLIERS</a> <br/>
+ </div>
+ <div class="span6">
+<h5>The standard chunk of Lorem</h5>
+The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for
+ those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et 
+ Malorum" by Cicero are also reproduced in their exact original form, 
+accompanied by English versions from the 1914 translation by H. Rackham.
+ </div>
+ </div>
+</footer>
+</div>
+
+<div class="copyright">
+<div class="container">
+	<p class="pull-right">
+		<a href="#"><img src="assets/img/maestro.png" alt="payment"></a>
+		<a href="#"><img src="assets/img/mc.png" alt="payment"></a>
+		<a href="#"><img src="assets/img/pp.png" alt="payment"></a>
+		<a href="#"><img src="assets/img/visa.png" alt="payment"></a>
+		<a href="#"><img src="assets/img/disc.png" alt="payment"></a>
+	</p>
+	<span>Copyright &copy; 2013<br> bootstrap ecommerce shopping template</span>
+</div>
+</div>
+<a href="#" class="gotop"><i class="icon-double-angle-up"></i></a>
+    Placed at the end of the document so the pages load faster -->
+ {% endblock  %}
+{% block script %}
+    <script src="{% static 'customer/assets/js/jquery.js' %}"></script>
+	<script src="{% static 'customer/assets/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'customer/assets/js/jquery.easing-1.3.min.js' %}"></script>
+    <script src="{% static 'customer/assets/js/jquery.scrollTo-1.4.3.1-min.js' %}"></script>
+    <script src="{% static 'customer/assets/js/shop.js' %}"></script>
+{% endblock  %}

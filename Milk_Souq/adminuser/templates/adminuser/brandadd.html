@@ -1,0 +1,135 @@
+{% extends 'adminuser/index.html' %}
+{% block head %}
+    <title>Add Item</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <style>
+
+      div, form, input, textarea, p {
+      padding: 0;
+      margin: 0;
+      aligh: center;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+      line-height: 22px;
+      }
+      h1 {
+      position: absolute;
+      margin: 0;
+      font-size: 32px;
+      color: black;
+      z-index: 2;
+      }
+      .testbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: inherit;
+      padding: 20px;
+      }
+      form {
+      width: 70%;
+      padding: 20px;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 0 10px 0 #cc0052;
+      }
+
+      input {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      }
+      input {
+      width: calc(100% - 10px);
+      padding: 5px;
+      }
+
+      .item:hover p, input:hover::placeholder {
+      color: #cc0052;
+      }
+      .item input:hover, .item textarea:hover {
+      border: 1px solid transparent;
+      box-shadow: 0 0 6px 0 #cc0052;
+      color: #cc0052;
+      }
+      .item {
+      position: relative;
+      margin: 10px 0;
+      }
+      .btn-block {
+      margin-top: 10px;
+      text-align: center;
+      }
+      button {
+      width: 150px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #cc0052;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      }
+      button:hover {
+      background: #ff0066;
+      }
+      @media (min-width: 568px) {
+      .name-item, .contact-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      }
+      .contact-item .item {
+      width: calc(50% - 8px);
+      }
+      .name-item input {
+      width: calc(50% - 20px);
+      }
+      .contact-item input {
+      width: calc(100% - 12px);
+      }
+      }
+    </style>
+ {% endblock  %}
+{% block section %}
+    <div class="testbox">
+      <form method="post" id="form1" enctype="multipart/form-data">
+            {% csrf_token %}
+          <h1>Add Brand</h1><br><br>
+
+        <div class="item">
+          <p>Name</p>
+          <div class="name-item">
+            <input type="text" name="name">
+               </div>
+
+
+
+        </div>
+
+
+
+           <p>Email</p>
+          <div class="name-item">
+
+            <input type="text" name="email"/>
+          </div>
+
+
+        <p>Phone</p>
+          <div class="name-item">
+
+            <input type="text" name="phone"/>
+          </div>
+
+
+        <div class="btn-block">
+          <button type="submit" href="/">Submit</button>
+        </div>
+      </form>
+    </div>
+  {% endblock  %}
+
